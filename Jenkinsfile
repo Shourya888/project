@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "yourusername/my-node-app"
+        DOCKER_IMAGE = "shouryat/my-node-app"
         DOCKER_REGISTRY = "docker.io"  // or Amazon ECR URL
-        EC2_HOST = "your-ec2-ip"
+        EC2_HOST = "43.204.220.173"
         EC2_USER = "ubuntu"
     }
 
@@ -13,16 +13,6 @@ pipeline {
             steps {
                 script {
                     docker.build(DOCKER_IMAGE)
-                }
-            }
-        }
-
-        stage('Push to Registry') {
-            steps {
-                script {
-                    docker.withRegistry("https://${DOCKER_REGISTRY}", 'docker-hub-creds') {
-                        docker.image(DOCKER_IMAGE).push()
-                    }
                 }
             }
         }
